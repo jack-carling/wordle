@@ -64,23 +64,8 @@ const handleSubmit = () => {
 };
 
 const evaluateWord = (input) => {
-  const result = [];
-
-  for (let i = 0; i < word.length; i++) {
-    const key = keyboard.value.find((value) => value.key === input[i].toUpperCase());
-    if (word[i] === input[i]) {
-      key.evaluation = 'correct';
-      result.push('correct');
-    } else if (word.includes(input[i])) {
-      if (key.evaluation !== 'correct') key.evaluation = 'present';
-      result.push('present');
-    } else {
-      if (!key.evaluation) key.evaluation = 'absent';
-      result.push('absent');
-    }
-  }
   const index = evaluation.value.findIndex((value) => value === null);
-  evaluation.value[index] = result;
+  handleBoardEvaluation(input, index);
   if (evaluation.value[index].every((value) => value === 'correct')) {
     gameOver.value = true;
     errors.value.unshift('Congratulations');
@@ -90,6 +75,51 @@ const evaluateWord = (input) => {
     gameOver.value = true;
     errors.value.unshift(`The word was ${word}`);
   }
+};
+
+const handleBoardEvaluation = (input, index) => {
+  const result = ['', '', '', '', ''];
+
+  const inputLetters = input.split('');
+  const wordLetters = word.split('');
+
+  const guesses = wordLetters.map((letter) => {
+    return { letter, taken: false };
+  });
+
+  inputLetters.forEach((letter, index) => {
+    if (letter === wordLetters[index]) {
+      result[index] = 'correct';
+      guesses[index].taken = true;
+      const key = keyboard.value.find((value) => value.key === input[index].toUpperCase());
+      key.evaluation = 'correct';
+    }
+  });
+
+  inputLetters.forEach((letter, index) => {
+    if (!wordLetters.includes(letter)) {
+      result[index] = 'absent';
+      const key = keyboard.value.find((value) => value.key === input[index].toUpperCase());
+      if (!key.evaluation) key.evaluation = 'absent';
+    }
+  });
+
+  inputLetters.forEach((letter, index) => {
+    if (!result[index]) {
+      const takenIndex = guesses.findIndex((guess) => guess.letter === letter && !guess.taken);
+      const key = keyboard.value.find((value) => value.key === input[index].toUpperCase());
+      if (takenIndex > -1) {
+        guesses[takenIndex].taken = true;
+        if (key.evaluation !== 'correct') key.evaluation = 'present';
+        result[index] = 'present';
+      } else {
+        if (!key.evaluation) key.evaluation = 'absent';
+        result[index] = 'absent';
+      }
+    }
+  });
+
+  evaluation.value[index] = result;
 };
 
 watch(
