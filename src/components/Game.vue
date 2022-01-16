@@ -31,6 +31,7 @@ const handleKey = (key) => {
 
 const handleDelete = () => {
   const index = board.value.findIndex((value) => value === '');
+  if (index === -1) return (board.value[board.value.length - 1] = '');
   const isCurrentRow = Math.floor((index - 1) / 5) === row.value;
   if (!isCurrentRow) return;
   const lastIndex = board.value.filter((value) => value !== '').length - 1;
@@ -38,11 +39,11 @@ const handleDelete = () => {
 };
 
 const handleSubmit = () => {
-  const index = board.value.findIndex((value) => value === '');
+  let index = board.value.findIndex((value) => value === '');
+  index = index === -1 ? 30 : index;
   const currentRow = Math.floor((index - 1) / 5);
   const isCurrentRow = currentRow === row.value;
   const rowComplete = index % 5 === 0;
-  // Handle last row
   if (isCurrentRow && rowComplete) {
     let word = '';
     const indexes = currentRow * 5;
@@ -83,6 +84,11 @@ const evaluateWord = (input) => {
   if (evaluation.value[index].every((value) => value === 'correct')) {
     gameOver.value = true;
     errors.value.unshift('Congratulations');
+    return;
+  }
+  if (row.value === 6) {
+    gameOver.value = true;
+    errors.value.unshift(`The word was ${word}`);
   }
 };
 
