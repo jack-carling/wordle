@@ -7,7 +7,7 @@ defineProps({ board: Array });
 <template>
   <main>
     <section>
-      <Cell v-for="cell in board" />
+      <Cell v-for="cell in board" :cell="cell" />
     </section>
   </main>
 </template>

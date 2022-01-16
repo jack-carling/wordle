@@ -1,3 +1,5 @@
+import { words } from './words';
+
 export const initializeBoard = () => {
   return [...Array(30)].map(() => '');
 };
@@ -9,4 +11,8 @@ export const initializeKeyboard = () => {
   });
   keys.push({ key: 'DELETE' });
   return keys;
+};
+
+export const getRandomWord = () => {
+  return words[Math.floor(Math.random() * words.length)];
 };

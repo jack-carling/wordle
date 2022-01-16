@@ -26,6 +26,9 @@ div.key {
   border-radius: 5px;
   display: grid;
   place-items: center;
+  &:hover {
+    opacity: 0.75;
+  }
 }
 div.wide {
   width: 80px;

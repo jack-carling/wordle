@@ -13,6 +13,7 @@ import Game from './components/Game.vue';
 }
 body {
   margin: 0;
+  padding: 1rem;
   background-color: $background;
 }
 </style>

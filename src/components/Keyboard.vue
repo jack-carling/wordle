@@ -4,9 +4,10 @@ import { checkValidKey } from '../utils/validate';
 import Key from './Key.vue';
 
 defineProps({ keyboard: Array });
+const emit = defineEmits(['keyboard']);
 
 const handleKey = (key) => {
-  console.log('Key:', key);
+  emit('keyboard', key);
 };
 
 const handleKeyEvent = (event) => {
