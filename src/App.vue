@@ -1,7 +1,17 @@
-<script setup></script>
+<script setup>
+import Game from './components/Game.vue';
+</script>
 
 <template>
-  <h1>Wordle</h1>
+  <Game />
 </template>
 
-<style></style>
+<style lang="scss">
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background-color: #22272d;
+}
+</style>
