@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --host",
+    "start": "node \"heroku/index\"",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "express": "^4.17.2",
     "vue": "^3.2.25"
   },
   "devDependencies": {
