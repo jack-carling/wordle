@@ -8,7 +8,7 @@
 div {
   width: 60px;
   height: 60px;
-  border: 1px solid #444c56;
-  color: #adbac7;
+  border: 1px solid $border;
+  color: $text;
 }
 </style>

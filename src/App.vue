@@ -9,9 +9,10 @@ import Game from './components/Game.vue';
 <style lang="scss">
 * {
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 body {
   margin: 0;
-  background-color: #22272d;
+  background-color: $background;
 }
 </style>
