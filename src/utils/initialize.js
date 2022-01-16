@@ -1,4 +1,4 @@
-import { words } from './words';
+import { common } from './words';
 
 export const initializeBoard = () => {
   return [...Array(30)].map(() => '');
@@ -14,5 +14,5 @@ export const initializeKeyboard = () => {
 };
 
 export const getRandomWord = () => {
-  return words[Math.floor(Math.random() * words.length)];
+  return common[Math.floor(Math.random() * common.length)];
 };
