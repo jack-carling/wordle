@@ -3,8 +3,12 @@ import { onBeforeMount, onMounted } from 'vue';
 import { checkValidKey } from '../utils/validate';
 import Key from './Key.vue';
 
-defineProps({ keyboard: Array });
+const props = defineProps({ keyboard: Array });
 const emit = defineEmits(['keyboard']);
+
+const keySet1 = props.keyboard.slice(0, 10);
+const keySet2 = props.keyboard.slice(10, 19);
+const keySet3 = props.keyboard.slice(19, 29);
 
 const handleKey = (key) => {
   emit('keyboard', key);
@@ -28,16 +32,30 @@ onBeforeMount(() => {
 
 <template>
   <section>
-    <Key v-for="value in keyboard" :value="value" @keyboard="handleKey" />
+    <div class="keys">
+      <Key v-for="value in keySet1" :value="value" @keyboard="handleKey" />
+    </div>
+    <div class="keys">
+      <Key v-for="value in keySet2" :value="value" @keyboard="handleKey" />
+    </div>
+    <div class="keys">
+      <Key v-for="value in keySet3" :value="value" @keyboard="handleKey" />
+    </div>
   </section>
 </template>
 
 <style lang="scss" scoped>
 section {
-  margin-top: 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px 10px;
-  justify-content: center;
+  margin-top: 1rem;
+  div.keys {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    @media only screen and (max-width: 600px) {
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+  }
 }
 </style>

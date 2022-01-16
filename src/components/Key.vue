@@ -17,8 +17,6 @@ const classObject = computed(() => {
   <div class="key" :class="classObject" @click="$emit('keyboard', value.key)">
     {{ value.key }}
   </div>
-  <div v-if="value.key === 'P'" class="break"></div>
-  <div v-if="value.key === 'L'" class="break"></div>
 </template>
 
 <style lang="scss" scoped>
@@ -35,9 +33,17 @@ div.key {
   &:hover {
     opacity: 0.75;
   }
+  @media only screen and (max-width: 600px) {
+    width: 30px;
+    height: 45px;
+  }
 }
 div.wide {
   width: 80px;
+  @media only screen and (max-width: 600px) {
+    width: 60px;
+    font-size: 0.7rem;
+  }
 }
 div.absent {
   background-color: $absent;
