@@ -1,8 +1,24 @@
 <script setup>
 import { ref, watch } from 'vue';
 
-const props = defineProps({ cell: String, index: Number, wiggle: Array });
+const props = defineProps({ cell: String, index: Number, wiggle: Array, evaluation: Array });
 const element = ref(null);
+
+watch(
+  () => [...props.evaluation],
+  () => {
+    const evaluation = props.evaluation.flat();
+    if (!evaluation[props.index]) return;
+    const value = evaluation[props.index];
+    const delay = 100 * (props.index % 5);
+    setTimeout(() => {
+      element.value.classList.add('flip');
+    }, delay);
+    setTimeout(() => {
+      element.value.classList.add(value);
+    }, 250 + delay);
+  }
+);
 
 watch(
   () => [...props.wiggle],
@@ -42,6 +58,15 @@ div {
   display: grid;
   place-items: center;
 }
+div.absent {
+  background-color: $absent;
+}
+div.present {
+  background-color: $present;
+}
+div.correct {
+  background-color: $correct;
+}
 div.animate {
   animation: scale 0.1s;
   animation-iteration-count: 1;
@@ -49,6 +74,11 @@ div.animate {
 div.wiggle {
   animation: wiggle 0.3s;
   animation-iteration-count: 3;
+}
+div.flip {
+  animation: flip 0.5s;
+  animation-iteration-count: 1;
+  // animation-fill-mode: forwards;
 }
 
 @keyframes wiggle {
@@ -78,6 +108,18 @@ div.wiggle {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
   }
 }
 </style>
