@@ -1,13 +1,16 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { initializeBoard, initializeKeyboard, getRandomWord } from '../utils/initialize';
 import { words } from '../utils/words';
 
 import Board from './Board.vue';
 import Keyboard from './Keyboard.vue';
+import Errors from './Errors.vue';
 
 const board = ref(initializeBoard());
 const keyboard = ref(initializeKeyboard());
+const errors = ref([]);
+const wiggle = ref([]);
 
 const word = getRandomWord();
 const row = ref(0);
@@ -41,15 +44,35 @@ const handleSubmit = () => {
     for (let i = indexes; i < indexes + 5; i++) {
       word += board.value[i];
     }
-    console.log(word);
-    row.value++;
-    // Handle evaluation
+    const isValidWord = words.includes(word.toLowerCase());
+    if (isValidWord) {
+      row.value++;
+      // Handle evaluation
+    } else {
+      errors.value.unshift('Not in word list');
+    }
+  } else {
+    errors.value.unshift('Not enough letters');
   }
 };
+
+watch(
+  () => [...errors.value],
+  (oldValue, newValue) => {
+    if (oldValue.length < newValue.length) return;
+    for (let i = row.value * 5; i < row.value * 5 + 5; i++) {
+      wiggle.value.push(i);
+    }
+    setTimeout(() => {
+      errors.value.pop();
+    }, 1500);
+  }
+);
 </script>
 
 <template>
-  <Board :board="board" />
+  <Errors :errors="errors" />
+  <Board :board="board" :errors="errors" :wiggle="wiggle" />
   <Keyboard :keyboard="keyboard" @keyboard="handleKey" />
 </template>
 

@@ -1,13 +1,13 @@
 <script setup>
 import Cell from './Cell.vue';
 
-defineProps({ board: Array });
+defineProps({ board: Array, wiggle: Array });
 </script>
 
 <template>
   <main>
     <section>
-      <Cell v-for="cell in board" :cell="cell" />
+      <Cell v-for="(cell, index) in board" :cell="cell" :index="index" :wiggle="wiggle" />
     </section>
   </main>
 </template>
