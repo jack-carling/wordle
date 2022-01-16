@@ -68,10 +68,10 @@ const evaluateWord = (input) => {
   for (let i = 0; i < word.length; i++) {
     const key = keyboard.value.find((value) => value.key === input[i].toUpperCase());
     if (word[i] === input[i]) {
-      if (!key.evaluation) key.evaluation = 'correct';
+      key.evaluation = 'correct';
       result.push('correct');
     } else if (word.includes(input[i])) {
-      if (!key.evaluation) key.evaluation = 'present';
+      if (key.evaluation !== 'correct') key.evaluation = 'present';
       result.push('present');
     } else {
       if (!key.evaluation) key.evaluation = 'absent';

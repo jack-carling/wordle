@@ -60,12 +60,15 @@ div {
 }
 div.absent {
   background-color: $absent;
+  border: none;
 }
 div.present {
   background-color: $present;
+  border: none;
 }
 div.correct {
   background-color: $correct;
+  border: none;
 }
 div.animate {
   animation: scale 0.1s;
@@ -78,7 +81,6 @@ div.wiggle {
 div.flip {
   animation: flip 0.5s;
   animation-iteration-count: 1;
-  // animation-fill-mode: forwards;
 }
 
 @keyframes wiggle {
