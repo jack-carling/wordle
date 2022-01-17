@@ -58,22 +58,6 @@ div {
   display: grid;
   place-items: center;
 }
-div.absent {
-  background-color: $absent;
-  border: none;
-}
-div.present {
-  background-color: $present;
-  border: none;
-}
-div.correct {
-  background-color: $correct;
-  border: none;
-}
-div.multiple {
-  background: linear-gradient(135deg, $correct, $correct 50%, $multiple 50%, $multiple 100%);
-  border: none;
-}
 div.animate {
   animation: scale 0.1s;
   animation-iteration-count: 1;

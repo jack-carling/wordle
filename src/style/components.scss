@@ -1,0 +1,43 @@
+main.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  section {
+    width: 340px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  span {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+  h1,
+  span {
+    color: $text;
+  }
+}
+
+div.absent {
+  background-color: $absent;
+  border: none !important;
+}
+div.present {
+  background-color: $present;
+  border: none !important;
+}
+div.correct {
+  background-color: $correct;
+  border: none !important;
+}
+div.multiple {
+  background: linear-gradient(135deg, $correct, $correct 50%, $multiple 50%, $multiple 100%);
+  border: none !important;
+}
