@@ -14,7 +14,7 @@ defineProps({ errors: Array });
 section {
   z-index: 999;
   position: fixed;
-  top: 1.5rem;
+  top: 1rem;
   left: 0;
   width: 100%;
   display: flex;

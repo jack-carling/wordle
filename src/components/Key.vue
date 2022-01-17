@@ -15,7 +15,8 @@ const classObject = computed(() => {
 
 <template>
   <div class="key" :class="classObject" @click="$emit('keyboard', value.key)">
-    {{ value.key }}
+    <span v-if="value.key !== 'DELETE'">{{ value.key }}</span>
+    <span v-else class="material-icons">backspace</span>
   </div>
 </template>
 
