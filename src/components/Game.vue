@@ -116,6 +116,20 @@ const handleBoardEvaluation = (input, index) => {
         if (!key.evaluation) key.evaluation = 'absent';
         result[index] = 'absent';
       }
+    } else if (result[index] === 'correct') {
+      const multiple = wordLetters.filter((value) => value === letter);
+      if (multiple.length <= 1) return;
+      const [multipleLetter] = multiple;
+      const guess = inputLetters.filter((value) => value === multipleLetter);
+      if (guess.length !== multiple.length) {
+        if (guess.length > multiple.length) return;
+        const [guessLetter] = guess;
+        inputLetters.forEach((letter, index) => {
+          if (letter === guessLetter && result[index] === 'correct') {
+            result[index] = 'multiple';
+          }
+        });
+      }
     }
   });
 
