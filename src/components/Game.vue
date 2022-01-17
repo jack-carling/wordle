@@ -17,7 +17,7 @@ const gameOver = ref(false);
 const word = getRandomWord();
 const row = ref(0);
 
-console.log(word);
+if (import.meta.env.DEV) console.log('[development] secret word:', word);
 
 const handleKey = (key) => {
   if (gameOver.value) return;
