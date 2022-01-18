@@ -10,7 +10,7 @@ const showHelp = ref(false);
 <template>
   <Header @open-help="showHelp = true" />
   <Game />
-  <transition name="fade">
+  <transition name="fade-overlay">
     <HowToPlay v-if="showHelp" @close="showHelp = false" />
   </transition>
 </template>
@@ -28,12 +28,12 @@ body {
     padding: 0.5rem;
   }
 }
-.fade-enter-active,
-.fade-leave-active {
+.fade-overlay-enter-active,
+.fade-overlay-leave-active {
   transition: all 0.3s ease-in-out;
 }
-.fade-enter-from,
-.fade-leave-to {
+.fade-overlay-enter-from,
+.fade-overlay-leave-to {
   opacity: 0;
   transform: scale(0.8);
 }
