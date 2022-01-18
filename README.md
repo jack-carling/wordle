@@ -16,15 +16,15 @@ Each guess must be a valid 5 letter word. Hit the enter button to submit.
 
 After each guess, the color of the tiles will change to show how close your guess was to the word.
 
-<img src="https://user-images.githubusercontent.com/72305598/149928670-7fecbc1e-b9d8-45c7-8e05-cf8eabf86eed.png" width="360" />
+<img src="https://user-images.githubusercontent.com/72305598/149939733-c67ffde1-b4fe-48a2-99da-f9733b526c86.png" width="360" />
 
 A green letter is in the word and in the correct spot. The word is not image but it starts with an I.
 
-<img src="https://user-images.githubusercontent.com/72305598/149928694-2cf5b6fb-c978-42b1-95d3-0f45c7fef33e.png" width="360" />
+<img src="https://user-images.githubusercontent.com/72305598/149939804-0b8cc2e7-4ea9-4b7d-824a-970ef6212206.png" width="360" />
 
 A yellow letter is in the word but in the wrong spot. The letter D exists in the word but not right there.
 
-<img src="https://user-images.githubusercontent.com/72305598/149928722-7188e0c1-a2f9-44a8-aa19-d9f8f9e949c0.png" width="360" />
+<img src="https://user-images.githubusercontent.com/72305598/149939866-262fb831-6250-4594-b90f-4b7ae9597093.png" width="360" />
 
 This double colored letter will give you a hint. The letter A is in the correct spot, but the word contains more than one letter A.
 
