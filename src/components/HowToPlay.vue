@@ -65,7 +65,7 @@ const emit = defineEmits(['close']);
 <style lang="scss" scoped>
 main {
   position: fixed;
-  top: 1rem;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -74,8 +74,9 @@ main {
   align-items: center;
   background-color: $background;
   overflow: auto;
+  padding: 1rem;
   @media only screen and (max-width: 400px) {
-    top: 0.5rem;
+    padding: 0.5rem;
   }
   span.hide {
     opacity: 0;
