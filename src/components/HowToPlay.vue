@@ -1,5 +1,18 @@
 <script setup>
+import { onBeforeUnmount, onMounted } from 'vue';
+
 const emit = defineEmits(['close']);
+
+onMounted(() => {
+  window.addEventListener('keyup', handleKey);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('keyup', handleKey);
+});
+
+const handleKey = (event) => {
+  if (event.code === 'Escape') emit('close');
+};
 </script>
 
 <template>
