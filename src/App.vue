@@ -4,12 +4,13 @@ import Game from './components/Game.vue';
 import Header from './components/Header.vue';
 import HowToPlay from './components/HowToPlay.vue';
 
+const gameOver = ref(false);
 const showHelp = ref(false);
 </script>
 
 <template>
-  <Header @open-help="showHelp = true" />
-  <Game />
+  <Header @open-help="showHelp = true" :gameOver="gameOver" @reset="gameOver = false" />
+  <Game :gameOver="gameOver" @game-over="gameOver = true" />
   <transition name="fade-overlay">
     <HowToPlay v-if="showHelp" @close="showHelp = false" />
   </transition>

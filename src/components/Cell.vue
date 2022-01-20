@@ -8,6 +8,21 @@ watch(
   () => [...props.evaluation],
   () => {
     const evaluation = props.evaluation.flat();
+    if (evaluation[props.index] === 'reset') {
+      if (element.value.classList.contains('flip')) {
+        element.value.classList.remove('flip');
+        void element.value.offsetWidth; // Required to restart a CSS animation
+        element.value.classList.add('flip');
+      }
+      const classes = [...element.value.classList].filter((classes) => classes !== 'flip');
+      setTimeout(() => {
+        element.value.classList.remove(...classes);
+      }, 250);
+      setTimeout(() => {
+        element.value.classList.remove('flip');
+      }, 500);
+      return;
+    }
     if (!evaluation[props.index]) return;
     const value = evaluation[props.index];
     const delay = 100 * (props.index % 5);

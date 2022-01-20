@@ -12,6 +12,7 @@ defineProps({ errors: Array });
 
 <style lang="scss" scoped>
 section {
+  pointer-events: none;
   z-index: 999;
   position: fixed;
   top: 1rem;

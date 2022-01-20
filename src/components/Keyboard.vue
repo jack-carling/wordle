@@ -1,14 +1,14 @@
 <script setup>
-import { onBeforeMount, onMounted } from 'vue';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { checkValidKey } from '../utils/validate';
 import Key from './Key.vue';
 
 const props = defineProps({ keyboard: Array });
 const emit = defineEmits(['keyboard']);
 
-const keySet1 = props.keyboard.slice(0, 10);
-const keySet2 = props.keyboard.slice(10, 19);
-const keySet3 = props.keyboard.slice(19, 29);
+const keySet1 = ref(props.keyboard.slice(0, 10));
+const keySet2 = ref(props.keyboard.slice(10, 19));
+const keySet3 = ref(props.keyboard.slice(19, 29));
 
 const handleKey = (key) => {
   emit('keyboard', key);
@@ -28,6 +28,15 @@ onMounted(() => {
 onBeforeMount(() => {
   window.removeEventListener('keyup', handleKeyEvent);
 });
+
+watch(
+  () => [...props.keyboard],
+  () => {
+    keySet1.value = props.keyboard.slice(0, 10);
+    keySet2.value = props.keyboard.slice(10, 19);
+    keySet3.value = props.keyboard.slice(19, 29);
+  }
+);
 </script>
 
 <template>

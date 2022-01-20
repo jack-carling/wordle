@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import { initializeBoard, initializeKeyboard, getRandomWord } from '../utils/initialize';
 import { words } from '../utils/words';
 
@@ -12,15 +12,20 @@ const keyboard = ref(initializeKeyboard());
 const errors = ref([]);
 const wiggle = ref([]);
 const evaluation = ref([null, null, null, null, null, null]);
-const gameOver = ref(false);
 
-const word = getRandomWord();
+const props = defineProps({ gameOver: Boolean });
+const emit = defineEmits(['game-over']);
+
+const word = ref(getRandomWord());
 const row = ref(0);
 
-if (import.meta.env.DEV) console.log('[development] secret word:', word);
+const logWord = () => {
+  if (import.meta.env.DEV) console.log('[development] secret word:', word.value);
+};
+logWord();
 
 const handleKey = (key) => {
-  if (gameOver.value) return;
+  if (props.gameOver) return;
   if (key === 'DELETE') return handleDelete();
   if (key === 'ENTER') return handleSubmit();
   const index = board.value.findIndex((value) => value === '');
@@ -67,13 +72,13 @@ const evaluateWord = (input) => {
   const index = evaluation.value.findIndex((value) => value === null);
   handleBoardEvaluation(input, index);
   if (evaluation.value[index].every((value) => value === 'correct')) {
-    gameOver.value = true;
+    emit('game-over');
     errors.value.unshift('Congratulations');
     return;
   }
   if (row.value === 6) {
-    gameOver.value = true;
-    errors.value.unshift(`The word was ${word}`);
+    emit('game-over');
+    errors.value.unshift(`The word was ${word.value}`);
   }
 };
 
@@ -81,7 +86,7 @@ const handleBoardEvaluation = (input, index) => {
   const result = ['', '', '', '', ''];
 
   const inputLetters = input.split('');
-  const wordLetters = word.split('');
+  const wordLetters = word.value.split('');
 
   const guesses = wordLetters.map((letter) => {
     return { letter, taken: false };
@@ -136,6 +141,29 @@ const handleBoardEvaluation = (input, index) => {
   evaluation.value[index] = result;
 };
 
+const handleReset = () => {
+  board.value = initializeBoard();
+  keyboard.value = initializeKeyboard();
+  errors.value = [];
+
+  const reset = [[], [], [], [], [], []];
+  for (let i = 0; i < 6; i++) {
+    for (let j = 0; j < 5; j++) {
+      reset[i][j] = 'reset';
+    }
+  }
+  evaluation.value = reset;
+
+  word.value = getRandomWord();
+  row.value = 0;
+
+  nextTick(() => {
+    evaluation.value = [null, null, null, null, null, null];
+  });
+
+  logWord();
+};
+
 watch(
   () => [...errors.value],
   (oldValue, newValue) => {
@@ -148,6 +176,14 @@ watch(
     setTimeout(() => {
       errors.value.pop();
     }, 1500);
+  }
+);
+
+watch(
+  () => props.gameOver,
+  () => {
+    // Reset game when gameOver changes back to false
+    if (!props.gameOver) handleReset();
   }
 );
 </script>

@@ -1,5 +1,6 @@
 <script setup>
-const emit = defineEmits(['open-help']);
+const emit = defineEmits(['open-help', 'reset']);
+const props = defineProps({ gameOver: Boolean });
 </script>
 
 <template>
@@ -7,7 +8,7 @@ const emit = defineEmits(['open-help']);
     <section>
       <span class="material-icons" @click="emit('open-help')">help_outline</span>
       <h1>Wordle</h1>
-      <span class="material-icons hide">emoji_events</span>
+      <span class="material-icons" :class="{ hide: !props.gameOver }" @click="emit('reset')">replay</span>
     </section>
   </main>
 </template>
