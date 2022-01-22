@@ -6,6 +6,7 @@ import { words } from '../utils/words';
 import Board from './Board.vue';
 import Keyboard from './Keyboard.vue';
 import Errors from './Errors.vue';
+import Modal from './Modal.vue';
 
 const board = ref(initializeBoard());
 const keyboard = ref(initializeKeyboard());
@@ -14,10 +15,13 @@ const wiggle = ref([]);
 const evaluation = ref([null, null, null, null, null, null]);
 
 const props = defineProps({ gameOver: Boolean });
-const emit = defineEmits(['game-over']);
+const emit = defineEmits(['game-over', 'reset']);
 
 const word = ref(getRandomWord());
 const row = ref(0);
+
+const showModal = ref(false);
+const score = ref({ wins: 0, losses: 0, points: 0, streak: 0, status: '' });
 
 const logWord = () => {
   if (import.meta.env.DEV) console.log('[development] secret word:', word.value);
@@ -73,12 +77,18 @@ const evaluateWord = (input) => {
   handleBoardEvaluation(input, index);
   if (evaluation.value[index].every((value) => value === 'correct')) {
     emit('game-over');
-    errors.value.unshift('Congratulations');
+    score.value.status = 'win';
+    setTimeout(() => {
+      showModal.value = true;
+    }, 750);
     return;
   }
   if (row.value === 6) {
     emit('game-over');
-    errors.value.unshift(`The word was ${word.value}`);
+    score.value.status = 'lose';
+    setTimeout(() => {
+      showModal.value = true;
+    }, 750);
   }
 };
 
@@ -164,14 +174,19 @@ const handleReset = () => {
   logWord();
 };
 
+const handleModalReset = () => {
+  showModal.value = false;
+  setTimeout(() => {
+    emit('reset');
+  }, 500);
+};
+
 watch(
   () => [...errors.value],
   (oldValue, newValue) => {
     if (oldValue.length < newValue.length) return;
-    if (oldValue[0] !== 'Congratulations') {
-      for (let i = row.value * 5; i < row.value * 5 + 5; i++) {
-        wiggle.value.push(i);
-      }
+    for (let i = row.value * 5; i < row.value * 5 + 5; i++) {
+      wiggle.value.push(i);
     }
     setTimeout(() => {
       errors.value.pop();
@@ -189,9 +204,28 @@ watch(
 </script>
 
 <template>
+  <transition name="fade-modal">
+    <Modal
+      v-if="showModal"
+      :word="word"
+      :score="score"
+      :row="row"
+      @reset="handleModalReset"
+      @close="showModal = false"
+    />
+  </transition>
   <Errors :errors="errors" />
   <Board :board="board" :errors="errors" :wiggle="wiggle" :evaluation="evaluation" />
   <Keyboard :keyboard="keyboard" @keyboard="handleKey" />
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fade-modal-enter-active,
+.fade-modal-leave-active {
+  transition: all 0.75s ease-in-out;
+}
+.fade-modal-enter-from,
+.fade-modal-leave-to {
+  opacity: 0;
+}
+</style>

@@ -23,6 +23,7 @@ section {
   align-items: center;
   gap: 0.5rem;
   div {
+    font-weight: 400;
     background-color: $text;
     padding: 0.5rem;
     border-radius: 5px;

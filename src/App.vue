@@ -10,8 +10,8 @@ const showHelp = ref(false);
 
 <template>
   <Header @open-help="showHelp = true" :gameOver="gameOver" @reset="gameOver = false" />
-  <Game :gameOver="gameOver" @game-over="gameOver = true" />
-  <transition name="fade-overlay">
+  <Game :gameOver="gameOver" @game-over="gameOver = true" @reset="gameOver = false" />
+  <transition name="fade-help">
     <HowToPlay v-if="showHelp" @close="showHelp = false" />
   </transition>
 </template>
@@ -20,6 +20,7 @@ const showHelp = ref(false);
 * {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  font-weight: 700;
 }
 body {
   margin: 0;
@@ -29,12 +30,12 @@ body {
     padding: 0.5rem;
   }
 }
-.fade-overlay-enter-active,
-.fade-overlay-leave-active {
+.fade-help-enter-active,
+.fade-help-leave-active {
   transition: all 0.3s ease-in-out;
 }
-.fade-overlay-enter-from,
-.fade-overlay-leave-to {
+.fade-help-enter-from,
+.fade-help-leave-to {
   opacity: 0;
   transform: scale(0.8);
 }
