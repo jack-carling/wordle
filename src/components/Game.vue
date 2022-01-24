@@ -7,6 +7,7 @@ import Board from './Board.vue';
 import Keyboard from './Keyboard.vue';
 import Errors from './Errors.vue';
 import Modal from './Modal.vue';
+import { getPoints } from '../utils/score';
 
 const board = ref(initializeBoard());
 const keyboard = ref(initializeKeyboard());
@@ -77,6 +78,10 @@ const evaluateWord = (input) => {
   handleBoardEvaluation(input, index);
   if (evaluation.value[index].every((value) => value === 'correct')) {
     emit('game-over');
+    const points = getPoints(row.value);
+    score.value.points += points;
+    score.value.wins += 1;
+    score.value.streak += 1;
     score.value.status = 'win';
     setTimeout(() => {
       showModal.value = true;
@@ -85,6 +90,8 @@ const evaluateWord = (input) => {
   }
   if (row.value === 6) {
     emit('game-over');
+    score.value.losses += 1;
+    score.value.streak = 0;
     score.value.status = 'lose';
     setTimeout(() => {
       showModal.value = true;

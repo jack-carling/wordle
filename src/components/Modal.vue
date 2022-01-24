@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onMounted, onBeforeUnmount } from 'vue';
+import Score from './Score.vue';
 
 const props = defineProps({ word: String, score: Object, row: Number });
 const emit = defineEmits(['reset', 'close']);
@@ -24,7 +25,7 @@ const handleKey = (event) => {
 
 <template>
   <main>
-    <section>
+    <section class="modal">
       <i class="material-icons close" @click="emit('close')">close</i>
       <template v-if="gameWon">
         <div class="icon win"><i class="material-icons">check</i></div>
@@ -36,6 +37,7 @@ const handleKey = (event) => {
         <span class="header">You lost!</span>
         <span class="text">The correct word was {{ word }}.</span>
       </template>
+      <Score :score="score" />
       <button @click="emit('reset')">Play again</button>
       <span class="hint">
         Hint: Press <kbd>Enter</kbd> on your keyboard to quickly start a new game or <kbd>Escape</kbd> to close this
@@ -60,7 +62,7 @@ main {
   @media only screen and (max-width: 400px) {
     padding: 0.5rem;
   }
-  section {
+  section.modal {
     width: 300px;
     height: max-content;
     background-color: $text;
@@ -88,6 +90,7 @@ main {
       }
     }
     button {
+      margin-top: 0.5rem;
       cursor: pointer;
       appearance: none;
       border: none;
@@ -107,7 +110,7 @@ main {
     }
     span.text {
       font-size: 0.9rem;
-      margin: 0.5rem 0 1rem 0;
+      margin: 0.5rem 0;
     }
     span.hint {
       margin-top: 1rem;
