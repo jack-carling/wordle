@@ -1,6 +1,16 @@
 # Wordle
 
-I was inspired by the popular game [Wordle](https://www.powerlanguage.co.uk/wordle/) and wanted to create my own version. I've mostly used Vue options API when building projects so this was the first time trying out Vue 3 using the composition API.
+I was inspired by the popular game [Wordle](https://www.powerlanguage.co.uk/wordle/) and wanted to create my own version. I've mostly worked with Vue options API when building projects before so this was my first time trying the composition API.
+
+The game contains 483 common words and chooses a random word each round. The words played are checked against a dictionary containing 12,923 words.
+
+**PWA:** Using the `vite-plugin-pwa` and self hosting both the fonts and dictionaries makes the game fully playable offline!
+
+Compared to the original Wordle game I've also added a hint for a correctly placed letter but indicating when the word contains more than one of that particular letter.
+
+The score is based on how well each round is played and reset when the player leaves the site (i.e. not saved in localStorage). Guessing the word on the first try gives 100 points, second try 80 points and so on (reducing by 20 each row) until the last row which gives no points. The game also tracks number of wins/losses and a streak (consecutive wins in a row which is reset if a round is lost).
+
+In development mode the word of the round is logged in the console.
 
 ## Demo
 
@@ -30,9 +40,9 @@ This double colored letter will give you a hint. The letter A is in the correct 
 
 And all the other dark gray letters indicate that they are not in the word in any spot.
 
-## Screenshot
+## Preview
 
-![](https://user-images.githubusercontent.com/72305598/149930761-843cbd58-b2ff-4c04-98f5-a951885e095f.png)
+![](https://user-images.githubusercontent.com/72305598/152695034-b5500020-93fb-4912-8e57-bbc8058a5346.gif)
 
 ## Setup
 
