@@ -12,10 +12,6 @@ The score is based on how well each round is played and reset when the player le
 
 In development mode the word of the round is logged in the console.
 
-## Demo
-
-[Play on Heroku](https://wordle-game.herokuapp.com/)
-
 ## Description
 
 Guess the word in 6 tries.
